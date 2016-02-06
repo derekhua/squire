@@ -7,7 +7,7 @@ chrome.commands.onCommand.addListener(function(command) {
     else {
       var recognizer = new webkitSpeechRecognition();
       recognizer.lang = "en";
-      
+
       recognizer.onresult = function(event) {
         if (event.results.length > 0) {
           console.log(event.results[event.results.length-1]);
@@ -51,7 +51,6 @@ chrome.commands.onCommand.addListener(function(command) {
   }
 
   var execute = function(command, args) {
-    console.log(command, + " " + args);
     builtInCommands[command](args);
   };
 
@@ -61,8 +60,28 @@ chrome.commands.onCommand.addListener(function(command) {
       var split = url[0].split('.');
     }
     else {
-      var split = url;
+      var split = [url];
     }
     window.open("http://www." + split[split.length - 2] + "." + split[split.length - 1], '_blank');
+  };
+  builtInCommands.say = function(words) {
+    var sentence = "";
+    for (i = 0; i < words.length; i++) {
+      sentence += words[i] + " ";
+    }
+    var u = new SpeechSynthesisUtterance(sentence);
+    window.speechSynthesis.speak(u);
+  };
+  builtInCommands.search = function(query) {
+    var sentence = "";
+    if (typeof query === 'object') {
+      for (i = 0; i < query.length; i++) {
+        sentence += query[i] + " ";
+      }
+    }
+    else {
+      sentence = query;
+    }
+    window.open("https://www.google.com/search?q=" + sentence, '_blank');
   };
 });
