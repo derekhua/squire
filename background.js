@@ -27,6 +27,13 @@ builtInCommands.search = function(query) {
   window.open("https://www.google.com/search?q=" + query.join(" "), '_blank');
 };
 
+builtInCommands.amazon = function(query) {
+  window.open("http://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=" + query.join(" "), '_blank');
+};
+
+builtInCommands.reddit = function(query) {
+  window.open("https://www.reddit.com/search?q=" + query.join(" "), '_blank');
+};
 builtInCommands.print = function() {
   console.log('in print');
   alert("I am an alert box!");

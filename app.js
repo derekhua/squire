@@ -33,7 +33,9 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
   }
 
   $scope.deleteCommand = function (index) {
+    var key = $scope.voiceCommands[index].name;
     $scope.voiceCommands.splice(index, 1);
+    localStorage.removeItem(key);
   }
 
   $scope.range = function(min, max, step) {
