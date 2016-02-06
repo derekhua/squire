@@ -50,14 +50,14 @@
 
   <md-content flex layout-padding>
     <div>
-      <div layout-gt-sm="row">
+      <div layout-gt-sm="row" ng-repeat="voiceCommand in voiceCommands">
         <md-input-container class="md-block" flex-gt-sm>
           <label>Voice Command</label>
-          <input ng-model="input.command">
+          <input ng-model="voiceCommand.name">
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
           <label>Actions</label>
-          <textarea ng-model="input.action" md-maxlength="150" rows="10" md-select-on-focus></textarea>
+          <textarea ng-model="voiceCommand.commands" md-maxlength="150" rows="10" md-select-on-focus></textarea>
         </md-input-container>
       </div>
     </div>

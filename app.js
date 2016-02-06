@@ -1,6 +1,12 @@
 angular.module( 'Squire', [ 'ngMaterial' ] )
 
 .controller("AppCtrl", function($scope, $timeout, $mdSidenav, $log) {
+  // e.g. var a = new Command("test", ["blah", "blah"]);
+  function VoiceCommand(name, commands) {
+    this.name = name;
+    this.commands = commands;
+  }
+  
   $scope.isOpen = false;
   $scope.demo = {
     isOpen: false,
@@ -8,6 +14,24 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
     selectedDirection: 'left'
   };
 
+  // var youtube = [];
+  // var main = {};
+  // main.command = "open";
+  // main.args = ["youtube.com"];
+  // youtube.push(main);
+  // var main2 = {};
+  // main2.command = "open";
+  // main2.args = ["reddit.com"];
+  // youtube.push(main2);
+  // localStorage.setItem("youtube", JSON.stringify(youtube));
+
+  $scope.voiceCommands = [];
+  for(var i = 0, len=localStorage.length; i<len; ++i) {
+    var key = localStorage.key(i);
+    var value = localStorage[key];
+    console.log(key + " => " + value);
+    $scope.voiceCommands.push({"name": key, "commands": value});
+  }
 
   $scope.toggleLeft = buildDelayedToggler('left');
   $scope.toggleRight = buildToggler('right');
