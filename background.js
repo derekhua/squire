@@ -1,30 +1,52 @@
+var msg = new SpeechSynthesisUtterance();
+var voices = window.speechSynthesis.getVoices();
+msg.voice = 'Daniel'; // Note: some voices don't support altering params
+msg.voiceURI = 'native';
+msg.volume = 1; // 0 to 1
+msg.rate = 1; // 0.1 to 10
+msg.pitch = 1; //0 to 2
+msg.text = 'Hello World';
+msg.lang = 'en-US';
+
 function execute(command, args) {
   builtInCommands[command](args);
 };
 
 var builtInCommands = {};
+
 builtInCommands.open = function(url) {
   window.open("http://www." + url[0], '_blank');
 };
+
 builtInCommands.say = function(words) {
-  var sentence = "";
-  for (i = 0; i < words.length; i++) {
-    sentence += words[i] + " ";
-  }
-  var u = new SpeechSynthesisUtterance(sentence);
-  window.speechSynthesis.speak(u);
+  msg.text = words.join(" ");
+  window.speechSynthesis.speak(msg);
 };
+
 builtInCommands.search = function(query) {
-  var sentence = "";
-  if (typeof query === 'object') {
-    for (i = 0; i < query.length; i++) {
-      sentence += query[i] + " ";
-    }
-  }
-  else {
-    sentence = query;
-  }
-  window.open("https://www.google.com/search?q=" + sentence, '_blank');
+  window.open("https://www.google.com/search?q=" + query.join(" "), '_blank');
+};
+
+builtInCommands.print = function() {
+  console.log('in print');
+  alert("I am an alert box!");
+  window.print();
+};
+
+builtInCommands.close = function(args) {
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
+    chrome.tabs.remove(tabArray[0].id);
+  });
+};
+
+builtInCommands.new = function() {
+  window.open();
+};
+
+builtInCommands.read = function() {
+  msg.text = window.getSelection().toString();
+  console.log(msg.text);
+  window.speechSynthesis.speak(msg);
 };
 
 chrome.commands.onCommand.addListener(function(command) {
@@ -51,6 +73,7 @@ chrome.commands.onCommand.addListener(function(command) {
             }).then(function(commandObjects) {
               // User command
               if (commandObjects !== undefined && commandObjects !== null) {
+                console.log('USER COMMAND');
                 // May have more than one command
                 console.log(commandObjects); 
                 for (var i = 0; i < commandObjects.length; ++i) {
@@ -59,6 +82,7 @@ chrome.commands.onCommand.addListener(function(command) {
               }
               // Built-in command
               else if (builtInCommands[transcript.split(" ")[0]] !== undefined) {
+                console.log('BUILTIN COMMAND');
                 var split;
                 var command;
                 var args;
