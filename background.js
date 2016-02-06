@@ -16,8 +16,15 @@ var builtInCommands = {};
 
 builtInCommands.open = function(url) {
   urlString = url.join('');
-  window.open("http://" + urlString, '_blank');
-  console.log("opening " + "http://" + urlString);
+  if (urlString === 'selected') {
+    chrome.tabs.executeScript(null, {
+      code:"window.open(window.getSelection().toString());"
+    });
+  }
+  else {
+    window.open("http://" + urlString, '_blank');
+    console.log("opening " + "http://" + urlString);
+  }
 };
 
 builtInCommands.say = function(words) {
@@ -81,6 +88,24 @@ builtInCommands.read = function() {
   });
 };
 
+builtInCommands.copy = function() {
+  chrome.tabs.executeScript(null, {
+    code:"document.execCommand('copy');"
+  });
+};
+
+builtInCommands.cut = function() {
+  chrome.tabs.executeScript(null, {
+    code:"document.execCommand('cut');"
+  });
+};
+
+builtInCommands.paste = function() {
+  chrome.tabs.executeScript(null, {
+    code:"document.execCommand('paste');"
+  });
+};
+
 chrome.commands.onCommand.addListener(function(command) {
   console.log('Command:', command);
   if (command === "Activate Microphone") {
@@ -137,9 +162,16 @@ chrome.commands.onCommand.addListener(function(command) {
 
       recognizer.onerror = function(event) {
         console.log("error: " + event.error);
+        recognizer = new webkitSpeechRecognition();
+        recognizer.start();
       };
 
+      recognizer.onend = function(event) {
+        chrome.browserAction.setIcon({path: 'icon.png'});
+      }
+
       recognizer.start();
+      chrome.browserAction.setIcon({path: 'mic-animate.png'});
     }
   }
 });
