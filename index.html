@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
+
+    <script src="/node_modules/angular/angular.js"></script> 
+    <script src="/node_modules/angular-aria/angular-aria.js"></script> 
+    <script src="/node_modules/angular-animate/angular-animate.js"></script> 
+    <script src="/node_modules/angular-material/angular-material.js"></script>
+
+    <script src="app.js"></script>
+
+    <style type="text/css" media="screen">
+      .md-button.md-fab.md-mini.add-button {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        margin-bottom: 40px;
+        margin-right: 40px;
+      }
+    </style>
+</head>
+<body ng-app="Squire" ng-controller="AppCtrl">
+
+  <md-content layout-padding>
+    <div>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Voice Command</label>
+          <input ng-model="">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Actions</label>
+          <textarea ng-model="" md-maxlength="150" rows="10" md-select-on-focus></textarea>
+        </md-input-container>
+      </div>
+    </div>
+
+    <md-button class="md-fab md-mini add-button" aria-label="FAB">
+      <md-icon md-svg-src="your/icon.svg"></md-icon>
+    </md-button>
+  </md-content>
+ 
+</body>
+</html>
