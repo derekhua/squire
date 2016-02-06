@@ -1,12 +1,11 @@
 angular.module( 'Squire', [ 'ngMaterial' ] )
 
-.controller("AppCtrl", function($scope, $timeout, $mdSidenav, $log) {
+.controller("AppCtrl", function($scope, $timeout, $mdSidenav, $log, $anchorScroll, $location) {
   // e.g. var a = new Command("test", ["blah", "blah"]);
   function VoiceCommand(name, commands) {
     this.name = name;
     this.commands = commands;
   }
-  
   $scope.isOpen = false;
   $scope.demo = {
     isOpen: false,
@@ -33,15 +32,49 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
     $scope.voiceCommands.push({"name": key, "commands": value});
   }
 
+  $scope.deleteCommand = function (index) {
+    var key = $scope.voiceCommands[index].name;
+    $scope.voiceCommands.splice(index, 1);
+    localStorage.removeItem(key);
+  }
+
+  $scope.range = function(min, max, step) {
+   step = step || 1;
+   var input = [];
+   for (var i = min; i <= max; i += step) {
+       input.push(i);
+   }
+   return input;
+  };
+
   $scope.toggleLeft = buildDelayedToggler('left');
   $scope.toggleRight = buildToggler('right');
   $scope.isOpenRight = function(){
     return $mdSidenav('right').isOpen();
   };
+  $scope.len = 0;
+  $scope.customCommand = {
+    "custom-command" : "",
+    "actions": [
+      {
+        "action" : "",
+        "args" : []
+      }
+    ]
+  }
   /**
    * Supplies a function that will continue to operate until the
    * time is up.
    */
+  $scope.newCommand = function() {
+    new Promise(function(resolve, reject) {
+        $scope.voiceCommands.push({"name": '', "commands": ''});
+        resolve();
+      }).then(function() {
+          $location.hash('bottom');
+          $anchorScroll();             
+      });
+  }
    function debounce(func, wait, context) {
     var timer;
     return function debounced() {
@@ -76,5 +109,6 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
       });
     }
   }
+
 
 });
