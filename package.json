@@ -1,0 +1,26 @@
+{
+  "name": "squire",
+  "version": "1.0.0",
+  "description": "a chrome extension that attends to you",
+  "main": "app.js",
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-animate": "^1.5.0",
+    "angular-aria": "^1.5.0",
+    "angular-material": "^1.0.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/derekhua/squire.git"
+  },
+  "author": "derek, jesse, xin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/derekhua/squire/issues"
+  },
+  "homepage": "https://github.com/derekhua/squire#readme"
+}
