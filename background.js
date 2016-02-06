@@ -15,7 +15,9 @@ function execute(command, args) {
 var builtInCommands = {};
 
 builtInCommands.open = function(url) {
-  window.open("http://www." + url[0], '_blank');
+  urlString = url.join('');
+  window.open("http://" + urlString, '_blank');
+  console.log("opening " + "http://" + urlString);
 };
 
 builtInCommands.say = function(words) {
@@ -34,19 +36,42 @@ builtInCommands.print = function() {
 };
 
 builtInCommands.close = function(args) {
-  chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
-    chrome.tabs.remove(tabArray[0].id);
-  });
+  if (args[0] === 'tab') {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
+      chrome.tabs.remove(tabArray[0].id);
+    });
+  } else if (args[0] === 'all'){
+    console.log('closing tabs');
+    chrome.tabs.query({}, function (tabArray) {
+      console.log('tabArray');
+      console.log(tabArray);
+      for (var i = 0; i < tabArray.length; ++i) {
+        chrome.tabs.remove(tabArray[i].id);  
+      }
+    });
+  } else if (args[0]) {
+    var urlString = args.join('');
+    console.log('closing: ' + urlString);
+    var urlPattern = '*://*.' + urlString + '/*';
+    chrome.tabs.query({ url: urlPattern }, function (tabArray) {
+      console.log('tabArray');
+      console.log(tabArray);
+      for (var i = 0; i < tabArray.length; ++i) {
+        chrome.tabs.remove(tabArray[i].id);  
+      }
+    });
+  }
 };
+builtInCommands.clothes = builtInCommands.close; // lol
 
 builtInCommands.new = function() {
   window.open();
 };
 
 builtInCommands.read = function() {
-  msg.text = window.getSelection().toString();
-  console.log(msg.text);
-  window.speechSynthesis.speak(msg);
+  chrome.tabs.executeScript(null, {
+    code:"window.speechSynthesis.speak(new SpeechSynthesisUtterance(window.getSelection().toString()));"
+  });
 };
 
 chrome.commands.onCommand.addListener(function(command) {

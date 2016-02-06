@@ -34,6 +34,8 @@
   "permissions": [
     "activeTab",
     "https://ajax.googleapis.com/",
-    "storage"
+    "storage",
+    "http://*/",
+    "https://*/"
   ]
 }
