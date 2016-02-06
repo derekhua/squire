@@ -1,46 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
 
-    <script src="/node_modules/angular/angular.js"></script> 
-    <script src="/node_modules/angular-aria/angular-aria.js"></script> 
-    <script src="/node_modules/angular-animate/angular-animate.js"></script> 
-    <script src="/node_modules/angular-material/angular-material.js"></script>
+  <script src="/node_modules/angular/angular.js"></script> 
+  <script src="/node_modules/angular-aria/angular-aria.js"></script> 
+  <script src="/node_modules/angular-animate/angular-animate.js"></script> 
+  <script src="/node_modules/angular-material/angular-material.js"></script>
 
-    <script src="app.js"></script>
+  <script src="app.js"></script>
 
-    <style type="text/css" media="screen">
-      .md-button.md-fab.md-mini.add-button {
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        margin-bottom: 40px;
-        margin-right: 40px;
-      }
-    </style>
+  <style type="text/css" media="screen">
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body > .app-content {
+      height: 100%;
+    }
+
+    md-fab-toolbar.add-button {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      margin-bottom: 40px;
+      margin-right: 40px;
+    }
+  </style>
 </head>
+
 <body ng-app="Squire" ng-controller="AppCtrl">
 
-  <md-content layout-padding>
+
+<section class="app-content" layout="row" flex>
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Squire</h1>
+    </md-toolbar>
+    <md-content layout-padding>
+      <p hide-md show-gt-md>
+        This is Squire. Your voice command help for Google Chrome.
+      </p>
+    </md-content>
+  </md-sidenav>
+
+  <md-content flex layout-padding>
     <div>
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
           <label>Voice Command</label>
-          <input ng-model="">
+          <input ng-model="input.command">
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
           <label>Actions</label>
-          <textarea ng-model="" md-maxlength="150" rows="10" md-select-on-focus></textarea>
+          <textarea ng-model="input.action" md-maxlength="150" rows="10" md-select-on-focus></textarea>
         </md-input-container>
       </div>
     </div>
 
-    <md-button class="md-fab md-mini add-button" aria-label="FAB">
-      <md-icon md-svg-src="your/icon.svg"></md-icon>
-    </md-button>
+    <md-fab-toolbar class="add-button" md-open="demo.isOpen" count="demo.count" md-direction="left">
+      <md-fab-trigger class="align-with-text">
+        <md-button aria-label="menu" class="md-fab md-primary">
+          <md-icon md-svg-src="img/icons/menu.svg"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-toolbar>
+        <md-fab-actions class="md-toolbar-tools">
+        <md-button aria-label="add1" class="md-icon-button-large">
+          add1
+        </md-button>
+        <md-button aria-label="add2" class="md-icon-button-large">
+          add2
+        </md-button>
+        <md-button aria-label="add3" class="md-icon-button-large">
+          add3
+        </md-button>
+        </md-fab-actions>
+      </md-toolbar>
+    </md-fab-toolbar>
+
   </md-content>
- 
+</section>
+
+
+
 </body>
 </html>
