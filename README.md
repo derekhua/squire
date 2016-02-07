@@ -52,7 +52,7 @@ More functionality and eventually on get on the chrome web store!
 * Clone the repo
 * Go to chrome://extensions/ (make sure you're using Chrome).
 * Press the button that says 'Load unpacked extension...'
-* Voila!
+* Voila! Windows: Ctrl+b, Mac: Cmd+b for mic listen.
 
 
 ### Authors and Contributors
