@@ -10,10 +10,19 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
 
   $scope.toggleLeft = buildDelayedToggler('left');
 
-  // Permission
-  if (navigator.webkitGetUserMedia) {
-    navigator.webkitGetUserMedia({audio: true}, function(stream) {}, 
-      function(){console.log("Microphone get access error")});
+  // Check mic
+  if (!localStorage.getItem('_hasMic')) {
+    checkMicSupport().then(function() {
+      console.log(true);
+      localStorage.setItem('_hasMic', true);
+    }).catch(function() {
+      console.log(false);
+      if (navigator.webkitGetUserMedia) {
+        console.log('needs permission');
+        navigator.webkitGetUserMedia({audio: true}, function() {}, 
+          function(){console.log("Microphone get access error")});
+      }
+    });  
   }
 
   // List of all user defined commands
