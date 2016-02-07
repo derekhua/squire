@@ -8,18 +8,12 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
     selectedDirection: 'left'
   };
 
-  $scope.micCheck = function() {
-    console.log('mic check');
-      (new webkitSpeechRecognition()).start();
-  };
-
-
   $scope.toggleLeft = buildDelayedToggler('left');
 
+  // Permission
   if (navigator.webkitGetUserMedia) {
-    navigator.webkitGetUserMedia({audio: true}, function(stream) {
-      video.src = window.URL.createObjectURL(stream);
-    }, function(){console.log("Microphone get access error")});
+    navigator.webkitGetUserMedia({audio: true}, function(stream) {}, 
+      function(){console.log("Microphone get access error")});
   }
 
   // List of all user defined commands
