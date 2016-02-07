@@ -1,4 +1,4 @@
-# Welcome to Squire!
+# Welcome to Squire! – it tends to all your resquirements!
 Squire is a Chrome extension that utilizes Google's Web Speech API to make it super easy to enable/create voice commands for various browser tasks. In addition, to the many built-in commands Squire offers, users can also define their own voice commands that can be bound to multiple user-defined actions.
 
 
@@ -50,9 +50,11 @@ More functionality and eventually on get on the chrome web store!
 
 ## Installation Guide
 * Clone the repo
-* Go to chrome://extensions/ (make sure you're using Chrome).
+* Go to [the extensions menu](chrome://extensions/)(make sure you're using Chrome).
 * Press the button that says 'Load unpacked extension...'
-* Voila! Windows: Ctrl+b, Mac: Cmd+b for mic listen.
+* Click the Squire icon and open the options client.
+* Answer 'yes' when it asks for mic permission.
+* Voila! Use ctrl+b or cmd+b for mac to turn on the voice control.
 
 
 ### Authors and Contributors
