@@ -8,6 +8,12 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
     selectedDirection: 'left'
   };
 
+  $scope.micCheck = function() {
+    console.log('mic check');
+      (new webkitSpeechRecognition()).start();
+  };
+
+
   $scope.toggleLeft = buildDelayedToggler('left');
 
   if (navigator.webkitGetUserMedia) {
@@ -21,7 +27,6 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
   for(var i = 0, len=localStorage.length; i<len; ++i) {
     var key = localStorage.key(i);
     var value = localStorage[key];
-    console.log(key + " => " + value);
     $scope.voiceCommands.push({"name": key, "commands": JSON.parse(value)});
   };
 
@@ -116,6 +121,7 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
       }
       var strJSON = JSON.stringify($scope.customVoiceCommand.commands);
       var strCMD = document.getElementById('voice_command').value;
+      strCMD = strCMD.toLowerCase();
       console.log(strCMD + " " + strJSON);
 
       localStorage.setItem(strCMD, strJSON);

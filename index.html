@@ -33,6 +33,8 @@
     .new-command-button {
       position: static;
       left: 25%;
+      margin-bottom: 30px;
+      margin-top: 30px;
     }
     md-fab-toolbar.new-action-button {
       position: static;
@@ -80,7 +82,10 @@
   <section class="app-content" layout="row" flex>
     <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
       <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">Squire</h1>
+        <h1 class="md-toolbar-tools" style="  color: #3F51B5;
+  text-shadow: 1px 1px 0px #3F51B5, -2px 3px 0px #FFFFFF;
+  font-size: xx-large;
+  margin-left: 25%">SQUIRE</h1>
       </md-toolbar>
       <md-content layout-padding>
         <div style="text-align: center;">
@@ -107,7 +112,7 @@
     </md-sidenav>
 
     <md-content flex layout-padding class="pane" >
-      <div >
+      <div style="box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12); padding: 0px;">
         <md-toolbar class="md-theme-light">
           <h2 class="md-toolbar-tools">
             <span>User Commands</span>

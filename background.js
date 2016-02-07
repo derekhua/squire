@@ -173,7 +173,10 @@ chrome.commands.onCommand.addListener(function(command) {
   console.log('Command:', command);
   if (command === "Activate Microphone") {
     if (!('webkitSpeechRecognition' in window)) {
-      upgrade();
+      console.log('no mic permission');
+      chrome.tabs.executeScript(null, {
+        code:"(new webkitSpeechRecognition()).start();"
+      });
     } 
     else {
       var recognizer = new webkitSpeechRecognition();
