@@ -31,7 +31,7 @@
       margin: 0;
     }
     .new-command-button {
-      position: fixed;
+      position: static;
       left: 25%;
     }
     md-fab-toolbar.new-action-button {
@@ -83,12 +83,18 @@
         <h1 class="md-toolbar-tools">Squire</h1>
       </md-toolbar>
       <md-content layout-padding>
+        <div style="text-align: center;">
+        <img style="width: 100%;" src="icon.png"/>
+        </div>
         <p hide-md show-gt-md>
-          This is Squire. Your voice command help for Google Chrome. You can do many cool things, but just remember to follow these guidelines:
+          This is Squire the Squirrel, your voice command help for Google Chrome. You can do many cool things, but just remember to follow these guidelines:
         </p>
-        <ul>
-          <li></li>
-        </ul>
+        <p hide-md show-gt-md>
+          Feel free to choose from Squire's wide array of built-in commands such as open, say, search, and many more! By simply pressing the microphone command (ctrl/command-B) and saying the magic words, you'll find yourself traversing the net hands-free. These commands are available right from the download in order to improve your online viewing experience. (Be sure to consult the full usage specifications for built-in commands over on our <a target="_blank" href="http://derekhua.me/squire/">page</a> to delve into the details of the commands).
+        </p>
+        <p hide-md show-gt-md>
+          Aside from knowing the built-in commands, Squire can also be taught to memorize customized and more advanced orders as well! Pressing the "New Command" button below allows you to specify a particular word or phrase to say that corresponds to a limitless combination of our built-in functions (designated in the header bar). For example, you can assign a phrase "Favorites" to opening all of your favorite websites based on your own specification. All of your personal commands will be shown on the right so start teaching Squire some commands and remember to have fun!!
+        </p>
       </md-content>
       <section layout="column" layout-align="center center">
         <md-button class="full md-raised md-primary new-command-button" ng-click="showAdvanced($event)">
