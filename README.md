@@ -50,7 +50,7 @@ More functionality and eventually on get on the chrome web store!
 
 ## Installation Guide
 * Clone the repo
-* Go to [the extensions menu](chrome://extensions/)(make sure you're using Chrome).
+* Go to chrome://extensions/ (make sure you're using Chrome).
 * Press the button that says 'Load unpacked extension...'
 * Voila!
 
