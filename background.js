@@ -43,6 +43,23 @@ builtInCommands.amazon = function(query) {
 builtInCommands.reddit = function(query) {
   window.open("https://www.reddit.com/search?q=" + query.join(" "), '_blank');
 };
+
+builtInCommands.upvote = function() {
+  var c = "var S = document.createElement('script');\
+      S.textContent = \"$($('.up')[0]).trigger('click');\";\
+      document.head.appendChild(S);";
+  chrome.tabs.executeScript(null, { code: c });
+};
+builtInCommands.apple = builtInCommands.upvote;
+
+builtInCommands.downvote = function() {
+  var c = "var S = document.createElement('script');\
+      S.textContent = \"$($('.down')[0]).trigger('click');\";\
+      document.head.appendChild(S);";
+  chrome.tabs.executeScript(null, { code: c });
+};
+builtInCommands.download = builtInCommands.downvote;
+
 builtInCommands.print = function() {
   console.log('in print');
   alert("I am an alert box!");
@@ -63,7 +80,23 @@ builtInCommands.close = function(args) {
         chrome.tabs.remove(tabArray[i].id);  
       }
     });
-  } else if (args[0]) {
+  } else if (args[0] === 'other') {
+      var currentId;
+      chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
+        currentId = tabArray[0].id;
+      });
+      console.log('closing all other tabs');
+      chrome.tabs.query({}, function (tabArray) {
+      console.log('tabArray');
+      console.log(tabArray);
+      for (var i = 0; i < tabArray.length; ++i) {
+        if (tabArray[i].id !== currentId) {
+          chrome.tabs.remove(tabArray[i].id);
+        }
+      }
+    });
+  }
+  else if (args[0]) {
     var urlString = args.join('');
     console.log('closing: ' + urlString);
     var urlPattern = '*://*.' + urlString + '/*';
@@ -105,6 +138,36 @@ builtInCommands.paste = function() {
     code:"document.execCommand('paste');"
   });
 };
+
+builtInCommands.mute = function(args) {
+  if (args[0] === 'all') {
+    chrome.tabs.query({}, function (tabArray) {
+      for (i = 0; i < tabArray.length; i++) {
+        chrome.tabs.update(tabArray[i].id, {muted : true});
+      }
+    });
+  }
+  else {
+    chrome.tabs.query({currentWindow: true, active : true}, function (tabArray) {
+      chrome.tabs.update(tabArray[0].id, {muted : true});
+    });
+  }
+}
+
+builtInCommands.unmute = function(args) {
+  if (args[0] === 'all') {
+    chrome.tabs.query({}, function (tabArray) {
+      for (i = 0; i < tabArray.length; i++) {
+        chrome.tabs.update(tabArray[i].id, {muted : false});
+      }
+    });
+  }
+  else {
+    chrome.tabs.query({currentWindow: true, active : true}, function (tabArray) {
+      chrome.tabs.update(tabArray[0].id, {muted : false});
+    });
+  }
+}
 
 chrome.commands.onCommand.addListener(function(command) {
   console.log('Command:', command);
