@@ -75,15 +75,16 @@
         <p hide-md show-gt-md>
           This is Squire. Your voice command help for Google Chrome.
         </p>
+        {{voiceCommands}}
       </md-content>
       <section layout="column" layout-align="center center">
-        <md-button class="full md-raised md-primary new-command-button" ng-click="newCommand()">New Command</md-button>
+        <md-button class="full md-raised md-primary new-command-button" ng-click="showAdvanced($event)">New Command</md-button>
       </section>
     </md-sidenav>
 
     <md-content flex layout-padding class="pane" >
       <div >
-        <div layout-gt-sm="row" class="animation" ng-repeat="voiceCommand in voiceCommands">
+        <div layout-gt-sm="row" class="animation" ng-repeat="v in voiceCommands">
          
           <md-card>
             <md-toolbar class="md-theme-indigo" layout-gt-sm="row" >
@@ -101,33 +102,12 @@
                   <md-icon md-font-set="material-icons">delete</md-icon>
                 </md-button>
             </md-toolbar>
-
-<!--               <md-fab-toolbar class="new-action-button" md-open="demo.isOpen" count="demo.count" md-direction="left">
-                <md-fab-trigger class="align-with-text">
-                  <md-button aria-label="menu" class="md-fab md-primary">
-                    <md-icon md-svg-src="img/icons/menu.svg"></md-icon>
-                  </md-button>
-                </md-fab-trigger>
-                  <md-toolbar>
-                <md-fab-actions class="md-toolbar-tools">
-                <md-button aria-label="search" class="md-icon-button-large">
-                  Search
-                </md-button>
-                <md-button aria-label="say" class="md-icon-button-large">
-                  Say
-                </md-button>
-                <md-button aria-label="open" class="md-icon-button-large">
-                  Open
-                </md-button>
-                </md-fab-actions>
-              </md-toolbar>
-            </md-fab-toolbar>
- -->
+            
             <md-card-title>
               <md-card-title-text layout-gt-sm="row"> 
                 <md-input-container class="md-block" flex-gt-sm>
                   <label>Voice Command</label>
-                  <input ng-model="voiceCommand.name" >
+                  <input ng-model="v.name" >
                 </md-input-container>
                 <md-container class="md-block" flex-gt-sm>
                   <label></label>
@@ -138,7 +118,7 @@
             <md-container layout-gt-sm="row" >
               <md-input-container class="md-block" flex-gt-sm>
                 <label>Action</label>
-                <input ng-model="voiceCommand.commands" rows="10" md-select-on-focus>
+                <input ng-model="v.commands" rows="10" md-select-on-focus>
               </md-input-container>          
             </md-container>
             </md-card-actions>
@@ -162,5 +142,7 @@
       </div>
     </md-content>
   </section>
+
+
 </body>
 </html>
