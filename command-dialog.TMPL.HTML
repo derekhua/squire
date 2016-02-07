@@ -20,9 +20,44 @@
                   <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('open')">
                     Open
                   </md-button>
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('close')">
+                    Close
+                  </md-button>
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('new')">
+                    New
+                  </md-button>
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('mute')">
+                    Mute
+                  </md-button>
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('unmute')">
+                    Unmute
+                  </md-button>                  
+              </md-toolbar> 
+
+
+              <md-toolbar class="md-theme-indigo" layout-gt-sm="row" >
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('read')">
+                    Read
+                  </md-button>
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('copy')">
+                    Copy
+                  </md-button>
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('cut')">
+                    Cut
+                  </md-button>
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('paste')">
+                    Paste
+                  </md-button>
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('amazon')">
+                    Amazon
+                  </md-button>
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('reddit')">
+                    Reddit
+                  </md-button>
+
                   <span flex="" class="flex"></span>
-                  <md-button class="md-icon-button delete-button" ng-click="submitCommand()">
-                    <md-icon style="font-size: 30px;" md-font-set="material-icons">accessibility</md-icon>
+                  <md-button class="md-button" ng-click="submitCommand()" style="color: #E66464;">
+                    Submit
                   </md-button>
               </md-toolbar>
 
@@ -31,9 +66,7 @@
               <md-card-title-text layout-gt-sm="row"> 
                 <md-input-container class="md-block" flex-gt-sm>
                   <label>Voice Command</label>
-                  <input id="voice_command" >
-                  {{voiceCommands}}
-                  {{customVoiceCommand}}
+                  <input id="voice_command" ng-model="customVoiceCommand.name">
                 </md-input-container>
                 <md-container class="md-block" flex-gt-sm>
                   <label></label>
@@ -41,12 +74,12 @@
               </md-card-title-text>
             </md-card-title>
 
-
             <md-card-actions>
-            <md-container layout-gt-sm="col" ng-repeat="actiono in customVoiceCommand.actions">
+            <md-container layout-gt-sm="col" ng-repeat="actiono in customVoiceCommand.commands">
               <md-input-container class="md-block" flex-gt-sm>
-                <label>{{customVoiceCommand.actions[$index].command}} Action</label>
-                <input id="action_{{$index}}" rows="10" md-select-on-focus>
+                <label>{{customVoiceCommand.commands[$index].command}} Action</label>
+                <input id="action_{{$index}}" ng-model="customVoiceCommand.commands[$index].args" rows="10" md-select-on-focus>
+                <md-icon ng-click="deleteAction($index)" class="md-secondary md-hue-3 trash-button">delete</md-icon>
               </md-input-container> 
             </md-container>
             </md-card-actions>

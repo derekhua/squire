@@ -31,6 +31,11 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
     );
   };
 
+  $scope.editCommand = function(index) {
+    $scope.customVoiceCommand = $scope.voiceCommands[index];
+    $scope.showAdvanced();
+  };
+
   // Modal
   $scope.showAdvanced = function(ev) {
     $scope.voiceCommands = [];
@@ -50,7 +55,8 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
       clickOutsideToClose:true,
       fullscreen: useFullScreen,
       locals: {
-        voiceCommands: $scope.voiceCommands
+        voiceCommands: $scope.voiceCommands,
+        customVoiceCommand: $scope.customVoiceCommand
       },
     }).then(function(result) {
       console.log(result);
@@ -70,23 +76,39 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
   };
 
   // Modal controller
-  function DialogController($scope, $mdDialog, voiceCommands) {
+  function DialogController($scope, $mdDialog, voiceCommands, customVoiceCommand) {
+    $scope.builtInFunctions = ['open', 'close', 'new', 'mute', 'unmute', 'say', 'search', 'read', 'copy', 'cut', 'paste', 'amazon', 'reddit'];
     $scope.voiceCommands = voiceCommands;
-    $scope.customVoiceCommand = {
-      "custom_command" : "",
-      "actions": [
-      ]
+    if (customVoiceCommand) {
+      console.log('good');
+      $scope.customVoiceCommand = customVoiceCommand; 
+      console.log($scope.customVoiceCommand);
+    } else {
+      console.log('bad');
+      $scope.customVoiceCommand = { 
+        "custom_command" : "",
+        "commands": [
+        ]
+      };  
+    }
+
+    $scope.deleteAction = function(index) {
+      $scope.customVoiceCommand.commands.splice(index, 1);
     };
+    
     $scope.addAction = function(type) {
-      $scope.customVoiceCommand.actions.push({"command": type, "args": []});
+      console.log($scope.customVoiceCommand);
+      $scope.customVoiceCommand.commands.push({"command": type, "args": []});
     };
 
     $scope.submitCommand = function() {
-      $scope.customVoiceCommand.actions.args = [];
-      for (i = 0; i != $scope.customVoiceCommand.actions.length; ++i) {
-        $scope.customVoiceCommand.actions[i].args.push(document.getElementById('action_' + i).value);
+      for (i = 0; i != $scope.customVoiceCommand.commands.length; ++i) {
+        if (typeof $scope.customVoiceCommand.commands[i].args !== 'object') {
+          $scope.customVoiceCommand.commands[i].args = $scope.customVoiceCommand.commands[i].args.split();  
+        }
+        //$scope.customVoiceCommand.commands[i].args.push(document.getElementById('action_' + i).value);
       }
-      var strJSON = JSON.stringify($scope.customVoiceCommand.actions);
+      var strJSON = JSON.stringify($scope.customVoiceCommand.commands);
       var strCMD = document.getElementById('voice_command').value;
       console.log(strCMD + " " + strJSON);
 
@@ -144,4 +166,9 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
       });
     }
   }
+
+
+
+
+
 });

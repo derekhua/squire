@@ -69,6 +69,10 @@
       right: 10px;
       bottom: 10px;
     }
+
+    md-list-item button.md-button.md-secondary-container.md-icon-button, md-list-item .md-list-item-inner button.md-button.md-secondary-container.md-icon-button {
+      margin-right: 30px;
+    }
   </style>
 </head>
 
@@ -87,7 +91,12 @@
         </ul>
       </md-content>
       <section layout="column" layout-align="center center">
-        <md-button class="full md-raised md-primary new-command-button" ng-click="showAdvanced($event)">New Command</md-button>
+        <md-button class="full md-raised md-primary new-command-button" ng-click="showAdvanced($event)">
+          New Command
+          <md-tooltip md-direction="right">
+            Click me!
+          </md-tooltip>
+        </md-button>
       </section>
     </md-sidenav>
 
@@ -106,8 +115,13 @@
                 <div ng-repeat="command in v.commands track by $index">
                   <p>{{command.command}} => {{command.args}}</p>                    
                 </div>                
+              </div>  
+              
+              <div class="button-right">
+                <md-icon ng-click="editCommand($index)" class="md-secondary md-hue-3 edit-button">edit</md-icon>
+                <md-icon ng-click="deleteCommand($index)" class="md-secondary md-hue-3 trash-button">delete</md-icon>
               </div>
-              <md-button class="md-secondary" ng-click="deleteCommand($index)">Delete</md-button>
+
               <md-divider ng-if="!$last"></md-divider>
             </md-list-item>
           </md-list>
@@ -118,20 +132,6 @@
           Toggle side nav
         </md-button>
         <a id="bottom"></a>
-<!--         <md-toolbar>
-          <md-fab-actions class="md-toolbar-tools">
-          <md-button aria-label="Search" class="md-icon-button-large" >
-            Search
-          </md-button>
-          <md-button aria-label="Say" class="md-icon-button-large">
-            Say
-          </md-button>
-          <md-button aria-label="Open" class="md-icon-button-large">
-            Open
-          </md-button>
-          </md-fab-actions>
-        </md-toolbar>
-      </md-fab-toolbar> -->
       </div>
     </md-content>
   </section>
