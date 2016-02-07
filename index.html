@@ -32,6 +32,7 @@
     }
     .new-command-button {
       position: fixed;
+      left: 25%;
     }
     md-fab-toolbar.new-action-button {
       position: static;
@@ -62,6 +63,12 @@
     .animation.ng-leave.ng-leave-active {
       opacity: 0;
     }
+
+    .toggle-nav {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+    }
   </style>
 </head>
 
@@ -73,9 +80,11 @@
       </md-toolbar>
       <md-content layout-padding>
         <p hide-md show-gt-md>
-          This is Squire. Your voice command help for Google Chrome.
+          This is Squire. Your voice command help for Google Chrome. You can do many cool things, but just remember to follow these guidelines:
         </p>
-        {{voiceCommands}}
+        <ul>
+          <li></li>
+        </ul>
       </md-content>
       <section layout="column" layout-align="center center">
         <md-button class="full md-raised md-primary new-command-button" ng-click="showAdvanced($event)">New Command</md-button>
@@ -84,46 +93,30 @@
 
     <md-content flex layout-padding class="pane" >
       <div >
-        <div layout-gt-sm="row" class="animation" ng-repeat="v in voiceCommands">
-         
-          <md-card>
-            <md-toolbar class="md-theme-indigo" layout-gt-sm="row" >
-              <md-button aria-label="search" class="md-icon-button-large">
-                  Search
-                </md-button>
-                <md-button aria-label="say" class="md-icon-button-large">
-                  Say
-                </md-button>
-                <md-button aria-label="open" class="md-icon-button-large">
-                  Open
-                </md-button>
-                <span flex="" class="flex"></span>
-                <md-button class="md-icon-button delete-button" ng-click="deleteCommand($index)">
-                  <md-icon md-font-set="material-icons">delete</md-icon>
-                </md-button>
-            </md-toolbar>
-            
-            <md-card-title>
-              <md-card-title-text layout-gt-sm="row"> 
-                <md-input-container class="md-block" flex-gt-sm>
-                  <label>Voice Command</label>
-                  <input ng-model="v.name" >
-                </md-input-container>
-                <md-container class="md-block" flex-gt-sm>
-                  <label></label>
-                </md-container>
-              </md-card-title-text>
-            </md-card-title>
-            <md-card-actions>
-            <md-container layout-gt-sm="row" >
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Action</label>
-                <input ng-model="v.commands" rows="10" md-select-on-focus>
-              </md-input-container>          
-            </md-container>
-            </md-card-actions>
-          </md-card>
-        </div>
+        <md-toolbar class="md-theme-light">
+          <h2 class="md-toolbar-tools">
+            <span>User Commands</span>
+          </h2>
+        </md-toolbar>
+        <md-content>
+          <md-list>
+            <md-list-item class="md-3-line animation" ng-repeat="v in voiceCommands">
+              <div class="md-list-item-text">
+                <h3>{{v.name}}</h3>                
+                <div ng-repeat="command in v.commands track by $index">
+                  <p>{{command.command}} => {{command.args}}</p>                    
+                </div>                
+              </div>
+              <md-button class="md-secondary" ng-click="deleteCommand($index)">Delete</md-button>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+          </md-list>
+        </md-content>
+
+        <md-button class="toggle-nav" ng-click="toggleLeft()"
+          class="md-primary" hide-gt-md>
+          Toggle side nav
+        </md-button>
         <a id="bottom"></a>
 <!--         <md-toolbar>
           <md-fab-actions class="md-toolbar-tools">

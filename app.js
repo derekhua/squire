@@ -1,11 +1,6 @@
 angular.module( 'Squire', [ 'ngMaterial' ] )
 
-.controller("AppCtrl", function($scope, $timeout, $mdSidenav, $log, $anchorScroll, $location, $mdDialog, $mdMedia) {
-  // e.g. var a = new Command("test", ["blah", "blah"]);
-  function VoiceCommand(name, commands) {
-    this.name = name;
-    this.commands = commands;
-  }
+.controller("AppCtrl", function($scope, $timeout, $mdSidenav, $log, $anchorScroll, $location, $mdDialog, $mdMedia, $mdToast) {
   $scope.isOpen = false;
   $scope.demo = {
     isOpen: false,
@@ -13,60 +8,60 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
     selectedDirection: 'left'
   };
 
-  // var youtube = [];
-  // var main = {};
-  // main.command = "open";
-  // main.args = ["youtube.com"];
-  // youtube.push(main);
-  // var main2 = {};
-  // main2.command = "open";
-  // main2.args = ["reddit.com"];
-  // youtube.push(main2);
-  // localStorage.setItem("youtube", JSON.stringify(youtube));
+  $scope.toggleLeft = buildDelayedToggler('left');
 
+  // List of all user defined commands
   $scope.voiceCommands = [];
   for(var i = 0, len=localStorage.length; i<len; ++i) {
     var key = localStorage.key(i);
     var value = localStorage[key];
     console.log(key + " => " + value);
-    $scope.voiceCommands.push({"name": key, "commands": value});
+    $scope.voiceCommands.push({"name": key, "commands": JSON.parse(value)});
   };
 
-  $scope.deleteCommand = function (index) {
+  $scope.deleteCommand = function(index) {
     var key = $scope.voiceCommands[index].name;
     $scope.voiceCommands.splice(index, 1);
     localStorage.removeItem(key);
+    $mdToast.show(
+      $mdToast.simple()
+        .textContent('Deleted!')
+        .position("top right")
+        .hideDelay(2000)
+    );
   };
 
-
-  $scope.toggleLeft = buildDelayedToggler('left');
-  $scope.toggleRight = buildToggler('right');
-  $scope.isOpenRight = function(){
-    return $mdSidenav('right').isOpen();
-  };
-  $scope.len = 0;
-  $scope.customCommand = {
-    "custom_command" : "",
-    "actions": [
-    ]
-  };
-
-   $scope.showAdvanced = function(ev) {
+  // Modal
+  $scope.showAdvanced = function(ev) {
     $scope.voiceCommands = [];
     for(var i = 0, len=localStorage.length; i<len; ++i) {
       var key = localStorage.key(i);
       var value = localStorage[key];
       console.log(key + " => " + value);
-      $scope.voiceCommands.push({"name": key, "commands": value});
+      $scope.voiceCommands.push({"name": key, "commands": JSON.parse(value)});
     };
     var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
     $mdDialog.show({
       parent: angular.element(document.body),
       templateUrl: 'command-dialog.tmpl.html',
       targetEvent: ev,
+      controller: DialogController,
+      scope: $scope,
       clickOutsideToClose:true,
       fullscreen: useFullScreen,
-    })
+      locals: {
+        voiceCommands: $scope.voiceCommands
+      },
+    }).then(function(result) {
+      console.log(result);
+      $scope.$apply(function(result) {
+        $scope.voiceCommands = result;
+      });
+      window.location.reload();
+    }).catch(function() {
+      window.location.reload();
+    });
+
     $scope.$watch(function() {
       return $mdMedia('xs') || $mdMedia('sm');
     }, function(wantsFullScreen) {
@@ -74,40 +69,37 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
     });
   };
 
-  $scope.hide = function() {
-    $mdDialog.hide();
-  };
-  $scope.cancel = function() {
-    $mdDialog.cancel();
-  };
-  $scope.answer = function(answer) {
-    $mdDialog.hide(answer);
-  };
-
-  $scope.addAction = function(type) {
-    $scope.customCommand.actions.push({"action": type, "args": ""});
-  };
-
-  $scope.submitCommand = function() {
-    for (i = 0; i != $scope.customCommand.actions.length; ++i) {
-      $scope.customCommand.actions[i].args = document.getElementById('action_' + i).value;
-    }
-    var strJSON = JSON.stringify($scope.customCommand.actions);
-    var strCMD = document.getElementById('voice_command').value;
-    $scope.customCommand.custom_command = strJSON;
-    localStorage.setItem(strCMD, strJSON);
-    $scope.resetCommand();  
-    $scope.hide();
-    window.location.reload();
-  };
-
-  $scope.resetCommand = function() {
-    $scope.customCommand = {
+  // Modal controller
+  function DialogController($scope, $mdDialog, voiceCommands) {
+    $scope.voiceCommands = voiceCommands;
+    $scope.customVoiceCommand = {
       "custom_command" : "",
       "actions": [
       ]
-    }
+    };
+    $scope.addAction = function(type) {
+      $scope.customVoiceCommand.actions.push({"command": type, "args": []});
+    };
+
+    $scope.submitCommand = function() {
+      $scope.customVoiceCommand.actions.args = [];
+      for (i = 0; i != $scope.customVoiceCommand.actions.length; ++i) {
+        $scope.customVoiceCommand.actions[i].args.push(document.getElementById('action_' + i).value);
+      }
+      var strJSON = JSON.stringify($scope.customVoiceCommand.actions);
+      var strCMD = document.getElementById('voice_command').value;
+      console.log(strCMD + " " + strJSON);
+
+      localStorage.setItem(strCMD, strJSON);
+      $scope.voiceCommands.push({"name": strCMD, "commands": JSON.parse(strJSON)});
+      
+      console.log('voiceCommands');
+      console.log($scope.voiceCommands);
+      $mdDialog.hide($scope.voiceCommands);
+    };
   }
+
+  // Calls for every new command
   $scope.newCommand = function(cmd, json) {
     new Promise(function(resolve, reject) {
         $scope.voiceCommands.push({"name": cmd, "commands": json});
@@ -152,6 +144,4 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
       });
     }
   }
-
-
 });

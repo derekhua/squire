@@ -4,20 +4,20 @@
   }
 </style>
 
-<md-dialog ng-controller="AppCtrl">
+<md-dialog>
   <form>
     <md-dialog-content flex>
       <div >
         <div layout-gt-sm="row" class="animation">
           <md-card>
               <md-toolbar class="md-theme-indigo" layout-gt-sm="row" >
-                <md-button aria-label="search" class="md-icon-button-large" ng-click="addAction('Search')">
+                  <md-button aria-label="search" class="md-icon-button-large" ng-click="addAction('search')">
                     Search
                   </md-button>
-                  <md-button aria-label="say" class="md-icon-button-large" ng-click="addAction('Say')">
+                  <md-button aria-label="say" class="md-icon-button-large" ng-click="addAction('say')">
                     Say
                   </md-button>
-                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('Open')">
+                  <md-button aria-label="open" class="md-icon-button-large" ng-click="addAction('open')">
                     Open
                   </md-button>
                   <span flex="" class="flex"></span>
@@ -25,27 +25,33 @@
                     <md-icon style="font-size: 30px;" md-font-set="material-icons">accessibility</md-icon>
                   </md-button>
               </md-toolbar>
+
+
             <md-card-title>
               <md-card-title-text layout-gt-sm="row"> 
                 <md-input-container class="md-block" flex-gt-sm>
                   <label>Voice Command</label>
                   <input id="voice_command" >
                   {{voiceCommands}}
-                  {{customCommand}}
+                  {{customVoiceCommand}}
                 </md-input-container>
                 <md-container class="md-block" flex-gt-sm>
                   <label></label>
                 </md-container>
               </md-card-title-text>
             </md-card-title>
+
+
             <md-card-actions>
-            <md-container layout-gt-sm="col" ng-repeat="actiono in customCommand.actions">
+            <md-container layout-gt-sm="col" ng-repeat="actiono in customVoiceCommand.actions">
               <md-input-container class="md-block" flex-gt-sm>
-                <label>{{customCommand.actions[$index].action}} Action</label>
+                <label>{{customVoiceCommand.actions[$index].command}} Action</label>
                 <input id="action_{{$index}}" rows="10" md-select-on-focus>
               </md-input-container> 
             </md-container>
             </md-card-actions>
+
+
           </md-card>
 
         </div>
