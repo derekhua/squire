@@ -19,6 +19,7 @@ We created something that has a lot of utility for people.
 
 ## What we learned
 * Chrome extensions
+* JavaScript
 
 ### Usage
 | Command       | Action                   | Example            |
@@ -26,8 +27,13 @@ We created something that has a lot of utility for people.
 | `open <arg>`        | opens url          | `open abc.xyz` |
 | `close tab`       | closes current tab               | `close`|
 | `close all`       | closes all tabs               | `close all`|
+| `close other`       | closes all but current tabs               | `close other`|
 | `close <arg.com>`       | closes \*://\*.arg.com/\*               | `close google.com`|
 | `new`         | opens new tab          | `new`        |
+| `mute`         | mutes current tab          | `mute`        |
+| `unmute`         | mutes current tab          | `unmute`        |
+| `mute all`         | mutes all tabs          | `mute all`        |
+| `unmute all`         | unmutes all tabs          | `unmute all`        |
 | `say`         | speech to speech         | `say hello world` |
 | `search`      | searches google           | `search big cats`  |
 | `read`        | text to speech selection | `read`         |
@@ -36,9 +42,18 @@ We created something that has a lot of utility for people.
 | `paste`       | pastes selection          | `paste`        |
 | `amazon`      | searches amazon           | `amazon toys`  |
 | `reddit`      | searches reddit           | `reddit cats`  |
+| `upvote`      | upvotes top comment/thread on reddit(experimental)           | `upvote`  |
+| `downvote`      | downvote top comment/thread on reddit(experimental)           | `downvote`  |
 
 ## What's next for Squire
 More functionality and eventually on get on the chrome web store!
+
+## Installation Guide
+* Clone the repo
+* Go to [the extensions menu](chrome://extensions/)(make sure you're using Chrome).
+* Press the button that says 'Load unpacked extension...'
+* Voila!
+
 
 ### Authors and Contributors
 Derek Hua (@derekhua), Jesse Chau (@JChauster), and Xin He (@xin-he).
