@@ -10,6 +10,12 @@ angular.module( 'Squire', [ 'ngMaterial' ] )
 
   $scope.toggleLeft = buildDelayedToggler('left');
 
+  if (navigator.webkitGetUserMedia) {
+    navigator.webkitGetUserMedia({audio: true}, function(stream) {
+      video.src = window.URL.createObjectURL(stream);
+    }, function(){console.log("Microphone get access error")});
+  }
+
   // List of all user defined commands
   $scope.voiceCommands = [];
   for(var i = 0, len=localStorage.length; i<len; ++i) {
