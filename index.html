@@ -121,7 +121,7 @@
         </md-toolbar>
         <md-content>
           <md-list>
-            <md-list-item class="md-3-line animation" ng-repeat="v in voiceCommands">
+            <md-list-item class="md-3-line animation" ng-repeat="v in voiceCommands" ng-hide="v.name === '_hasMic'" >
               <div class="md-list-item-text">
                 <h3>{{v.name}}</h3>                
                 <div ng-repeat="command in v.commands track by $index">
