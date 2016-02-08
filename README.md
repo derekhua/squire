@@ -50,9 +50,9 @@ More functionality and eventually on get on the chrome web store!
 
 ## Installation Guide
 * Clone the repo
-* Go to [the extensions menu](chrome://extensions/)(make sure you're using Chrome).
-* Press the button that says 'Load unpacked extension...'
-* Click the Squire icon and open the options client.
+* Go to chrome://extensions/
+* Press the button that says 'Load unpacked extension...' and select the squire folder.
+* Click the Squire extension icon and open the options client.
 * Answer 'yes' when it asks for mic permission.
 * Voila! Use ctrl+b or cmd+b for mac to turn on the voice control.
 
