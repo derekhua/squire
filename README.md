@@ -49,7 +49,7 @@ We created something that has a lot of utility for people.
 More functionality and eventually on get on the chrome web store!
 
 ## Installation Guide
-* Clone the repo
+* Clone the repo or download and unzip the folder.
 * Go to chrome://extensions/
 * Press the button that says 'Load unpacked extension...' and select the squire folder.
 * Click the Squire extension icon and open the options client.
