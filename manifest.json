@@ -17,20 +17,13 @@
             "128": "icon.png"
             },
   "commands": {
-    "_execute_browser_action": {
-      "suggested_key": {
-        "windows": "Ctrl+Shift+Y",
-        "mac": "Command+Shift+Y",
-        "chromeos": "Ctrl+Shift+U",
-        "linux": "Ctrl+Shift+J"
-      },
-      "description": "test1"
-    },
     "Activate Microphone": {
       "suggested_key": {
-        "default": "Ctrl+B",
         "windows": "Ctrl+B",
-        "mac": "Command+B"
+        "mac": "Command+B",
+        "linux": "Ctrl+B",
+        "chromeos": "Ctrl+B",
+        "default": "Ctrl+B"
       },
       "description": "Activate the microphone"
     }
